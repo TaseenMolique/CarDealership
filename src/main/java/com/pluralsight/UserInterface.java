@@ -23,49 +23,135 @@ public class UserInterface {
             System.out.println("8. Add a vehicle");
             System.out.println("9. Remove a vehicle");
             System.out.println("0. Quit");
-            System.out.println("Please select an option");
+            System.out.print("Please select an option: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (choice){
-
+            switch (choice) {
+                case 1:
+                    findByPriceRange();
+                    break;
+                case 2:
+                    findByMakeModel();
+                    break;
+                case 3:
+                    findByYearRange();
+                    break;
+                case 4:
+                    findByColor();
+                    break;
+                case 5:
+                    findByMileageRange();
+                    break;
+                case 6:
+                    findByType();
+                    break;
+                case 7:
+                    listAllVehicles();
+                    break;
+                case 8:
+                    addVehicle();
+                    break;
+                case 9:
+                    removeVehicle();
+                    break;
+                case 0:
+                    return;
+                default:
+                    System.out.println("Invalid option, please try again.");
             }
-
         }
     }
 
     private void findByPriceRange() {
-        System.out.println("Enter minimum price: ");
+        System.out.print("Enter minimum price: ");
         double min = scanner.nextDouble();
-        System.out.println("Enter maximum price: ");
+        System.out.print("Enter maximum price: ");
         double max = scanner.nextDouble();
         Vehicle[] vehicles = dealership.findByPriceRange(min, max);
         displayVehicles(vehicles);
     }
 
     private void findByMakeModel() {
-        System.out.println("Enter make: ");
+        System.out.print("Enter make: ");
         String make = scanner.nextLine();
-        System.out.println("Enter model: ");
+        System.out.print("Enter model: ");
         String model = scanner.nextLine();
         Vehicle[] vehicles = dealership.findByMakeModel(make, model);
         displayVehicles(vehicles);
     }
 
     private void findByYearRange() {
-        System.out.println("Enter start year: ");
+        System.out.print("Enter start year: ");
         int startYear = scanner.nextInt();
-        System.out.println("Enter end year: ");
+        System.out.print("Enter end year: ");
         int endYear = scanner.nextInt();
         Vehicle[] vehicles = dealership.findByYearRange(startYear, endYear);
         displayVehicles(vehicles);
     }
 
-    
+    private void findByColor() {
+        System.out.print("Enter color: ");
+        String color = scanner.nextLine();
+        Vehicle[] vehicles = dealership.findByColor(color);
+        displayVehicles(vehicles);
+    }
 
-    private void displayVehicles(Vehicle[] vehicles){
-        if (vehicles.length == 0 || vehicles[0] == null){
+    private void findByMileageRange() {
+        System.out.print("Enter minimum mileage: ");
+        int min = scanner.nextInt();
+        System.out.print("Enter maximum mileage: ");
+        int max = scanner.nextInt();
+        Vehicle[] vehicles = dealership.findByMileageRange(min, max);
+        displayVehicles(vehicles);
+    }
+
+    private void findByType() {
+        System.out.print("Enter type (car, truck, SUV, or van): ");
+        String type = scanner.nextLine();
+        Vehicle[] vehicles = dealership.findByType(type);
+        displayVehicles(vehicles);
+    }
+
+    private void listAllVehicles() {
+        Vehicle[] vehicles = dealership.listAllVehicles();
+        displayVehicles(vehicles);
+    }
+
+    private void addVehicle() {
+        System.out.print("Enter ID: ");
+        int id = scanner.nextInt();
+        System.out.print("Enter Year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline
+        System.out.print("Enter Make: ");
+        String make = scanner.nextLine();
+        System.out.print("Enter Model: ");
+        String model = scanner.nextLine();
+        System.out.print("Enter Type: ");
+        String type = scanner.nextLine();
+        System.out.print("Enter color: ");
+        String color = scanner.nextLine();
+        System.out.print("Enter Mileage: ");
+        int mileage = scanner.nextInt();
+        System.out.print("Enter price: ");
+        double price = scanner.nextDouble();
+
+        Vehicle vehicle = new Vehicle(id, year, make, model, type, color, mileage, price);
+        dealership.addVehicle(vehicle);
+        System.out.println("Added vehicle successfully!");
+    }
+
+    private void removeVehicle() {
+        System.out.print("Enter Vehicle ID to remove: ");
+        int id = scanner.nextInt();
+        dealership.removeVehicle(id);
+        System.out.println("Removed vehicle successfully");
+    }
+
+    private void displayVehicles(Vehicle[] vehicles) {
+        if (vehicles.length == 0 || vehicles[0] == null) {
             System.out.println("No vehicles found.");
         } else {
             for (Vehicle v : vehicles) {
@@ -75,5 +161,4 @@ public class UserInterface {
             }
         }
     }
-
 }

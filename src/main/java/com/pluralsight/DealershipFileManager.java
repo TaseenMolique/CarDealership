@@ -6,7 +6,7 @@ public class DealershipFileManager {
     private static final String filePath = "Vehicles.csv";
 
     public static Dealership loadDealership() {
-        try (BufferedReader bf = new BufferedReader(new FileReader(filePath))){
+        try (BufferedReader bf = new BufferedReader(new FileReader(filePath))) {
             String[] dealershipInfo = bf.readLine().split("\\|");
             Dealership dealership = new Dealership(dealershipInfo[0], dealershipInfo[1], dealershipInfo[2]);
             String line;
@@ -25,25 +25,29 @@ public class DealershipFileManager {
                 dealership.addVehicle(vehicle);
             }
             return dealership;
-        } catch (FileNotFoundException fnfe){
-            System.out.println("File now foundL " + filePath);
+        } catch (FileNotFoundException fnfe) {
+            System.out.println("File not found: " + filePath);
             return new Dealership("Default Dealership", "N/A", "N/A");
         } catch (Exception e) {
-            System.out.println("Error loading dealership data." + e.getMessage());
+            System.out.println("Error loading dealership data: " + e.getMessage());
             return null;
         }
     }
 
-    public  static void saveDealership(Dealership dealership){
-        try {
-            FileWriter writer = new FileWriter(filePath);
-            writer.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone() + "\n");
-            for (Vehicle vehicle : dealership.listAllVehicles()){
-                writer.write(vehicle.toString() + "\n");
+    public static void saveDealership(Dealership dealership) {
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath))) {
+            bufferedWriter.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
+            bufferedWriter.newLine();
+
+            Vehicle[] vehicles = dealership.getVehicles();
+            for (Vehicle vehicle : vehicles) {
+                if (vehicle != null) {
+                    bufferedWriter.write(vehicle.toString());
+                    bufferedWriter.newLine();
+                }
             }
-        } catch (IOException ioex) {
-            System.out.println("Error saving dealership data.");
+        } catch (Exception e) {
+            System.out.println("Error saving dealership data: " + e.getMessage());
         }
     }
-
 }

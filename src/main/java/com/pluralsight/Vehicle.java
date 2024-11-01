@@ -14,13 +14,12 @@ public class Vehicle {
         this.id = id;
         this.year = year;
         this.make = make;
-        this.price = price;
-        this.mileage = mileage;
-        this.color = color;
         this.model = model;
         this.type = type;
+        this.color = color;
+        this.mileage = mileage;
+        this.price = price;
     }
-
 
     public int getId() {
         return id;
@@ -55,9 +54,7 @@ public class Vehicle {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return id + "|" + year + "|" + make + "|" + model + "|" + type + "|" + color + "|" + mileage + "|" + price;
     }
-
-
 }
