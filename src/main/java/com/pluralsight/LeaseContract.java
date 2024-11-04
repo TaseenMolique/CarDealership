@@ -27,7 +27,7 @@ public class LeaseContract extends Contract {
 
     @Override
     public void calculatePrice() {
-        //Price calculated is handled in collectLeaseInfo logic
+
     }
 
     @Override

@@ -28,6 +28,15 @@ public class Dealership {
         return vehicles.toArray(new Vehicle[0]);
     }
 
+    public Vehicle getVehicleById(int id) {
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle != null && vehicle.getId() == id) {
+                return vehicle;
+            }
+        }
+        return null;
+    }
+
     public Vehicle[] findByPriceRange(double min, double max) {
         return findVehicles(v -> v.getPrice() >= min && v.getPrice() <= max);
     }

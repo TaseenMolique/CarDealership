@@ -22,6 +22,7 @@ public class UserInterface {
             System.out.println("7. List all vehicles");
             System.out.println("8. Add a vehicle");
             System.out.println("9. Remove a vehicle");
+            System.out.println("10. Create a contract");
             System.out.println("0. Quit");
             System.out.print("Please select an option: ");
 
@@ -55,6 +56,9 @@ public class UserInterface {
                     break;
                 case 9:
                     removeVehicle();
+                    break;
+                case 10:
+                    createContract();
                     break;
                 case 0:
                     return;
@@ -160,5 +164,52 @@ public class UserInterface {
                 }
             }
         }
+    }
+
+    private void createContract() {
+        System.out.println("Select contract type: ");
+        System.out.println("1. Lease Contract");
+        System.out.println("2. Sales Contract");
+        System.out.println("Enter a choice: ");
+        int contractChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        System.out.print("Enter contract type: ");
+        String contractType = scanner.nextLine();
+        System.out.print("Enter contract date: ");
+        String contractDate = scanner.nextLine();
+        System.out.print("Enter customer name: ");
+        String customerName = scanner.nextLine();
+        System.out.print("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+
+        Vehicle vehicle = selectVehicle();
+
+        Contract contract;
+        if (contractChoice == 1) {
+            contract = new LeaseContract(contractType, contractDate, customerName, customerEmail, vehicle);
+        } else {
+            contract = new SalesContract(contractType, contractDate, customerName, customerEmail, vehicle);
+        }
+
+        if (contractChoice == 1) {
+            ((LeaseContract) contract).collectLeaseInfo();
+        } else {
+            ((SalesContract) contract).collectsSalesInfo();
+        }
+
+        ContractFileManager.saveContract(contract);
+        System.out.println("Contract created successfully!");
+    }
+
+    private Vehicle selectVehicle() {
+        System.out.print("Enter Vehicle ID to select: ");
+        int id = scanner.nextInt();
+        Vehicle vehicle = dealership.getVehicleById(id);
+        if (vehicle == null) {
+            System.out.println("No vehicle found with ID: " + id);
+            return selectVehicle();
+        }
+        return vehicle;
     }
 }

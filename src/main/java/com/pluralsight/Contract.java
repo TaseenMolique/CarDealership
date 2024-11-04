@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-public class Contract {
+public abstract class Contract {
     protected String contractType;
     protected String contractDate;
     protected String customerName;
@@ -8,6 +8,8 @@ public class Contract {
     protected Vehicle vehicle;
     protected double totalPrice;
     protected double monthlyPayment;
+
+    public abstract void calculatePrice();
 
 
     public Contract(String contractType, String contractDate, String customerName, String customerEmail, com.pluralsight.Vehicle vehicle) {
@@ -17,8 +19,6 @@ public class Contract {
         this.customerEmail = customerEmail;
         this.vehicle = vehicle;
     }
-
-    public abstract void calculatePrice();
 
     public String toCSV() {
         return contractType + "|" + contractDate + "|" + customerName + "|" + customerEmail + "|" + vehicle.getId()
